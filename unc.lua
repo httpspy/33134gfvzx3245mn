@@ -14,7 +14,7 @@ local task = table.clone(task)
 local game = game -- game is game
 local oldGame = game
 
-local Version = '1.1.6'
+local Version = '2.0.0'
 
 local isDragging = false -- rconsole
 local dragStartPos = nil -- rconsole
