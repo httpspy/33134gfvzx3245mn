@@ -1,8 +1,8 @@
 if getgenv and getgenv().MoreUNC then return end
 
-  Definitions
-local table = table.clone(table)   Prevent modifications from other scripts
-local debug = table.clone(debug)   ^^^^
+-- Definitions
+local table = table.clone(table) -- Prevent modifications from other scripts
+local debug = table.clone(debug) -- ^^^^
 local bit32 = table.clone(bit32)
 local bit = bit32
 local os = table.clone(os)
@@ -11,14 +11,14 @@ local utf8 = table.clone(utf8)
 local string = table.clone(string)
 local task = table.clone(task)
 
-local game = game   game is game
+local game = game -- game is game
 local oldGame = game
 
 local Version = '1.1.6'
 
-local isDragging = false   rconsole
-local dragStartPos = nil   rconsole
-local frameStartPos = nil   rconsole
+local isDragging = false -- rconsole
+local dragStartPos = nil -- rconsole
+local frameStartPos = nil -- rconsole
 
 local Data = game:GetService("TeleportService"):GetLocalPlayerTeleportData()
 local TeleportData
@@ -39,7 +39,7 @@ pcall = pcall
 printidentity = printidentity
 ipairs = ipairs
 pairs = pairs
-to ing = to ing
+tostring = tostring
 tonumber = tonumber
 setmetatable = setmetatable
 rawget = rawget
@@ -48,23 +48,23 @@ getmetatable = getmetatable
 type = type
 version = version
 
-  Services / Instances
+-- Services / Instances
 local HttpService = game:GetService('HttpService');
 local Log = game:GetService('LogService');
 
 local vim = Instance.new("VirtualInputManager");
 
-local DrawingDict = Instance.new("ScreenGui")   For drawing.new
+local DrawingDict = Instance.new("ScreenGui") -- For drawing.new
 
-local ClipboardUI = Instance.new("ScreenGui")   For setclipboard
+local ClipboardUI = Instance.new("ScreenGui") -- For setclipboard
 
-local hui = Instance.new("Folder")   For gethui
+local hui = Instance.new("Folder") -- For gethui
 hui.Name = '\0'
 
-local ClipboardBox = Instance.new('TextBox', ClipboardUI)   For setclipboard
-ClipboardBox.Position = UDim2.new(100, 0, 100, 0)   VERY off screen
+local ClipboardBox = Instance.new('TextBox', ClipboardUI) -- For setclipboard
+ClipboardBox.Position = UDim2.new(100, 0, 100, 0) -- VERY off screen
 
-  All the following are for rconsole
+-- All the following are for rconsole
 local Console = Instance.new("ScreenGui")
 local ConsoleFrame = Instance.new("Frame")
 local Topbar = Instance.new("Frame")
@@ -218,21 +218,21 @@ InputTemplate.TextSize = 20.000
 InputTemplate.TextXAlignment = Enum.TextXAlignment.Left
 InputTemplate.TextYAlignment = Enum.TextYAlignment.Top
 
-  Variables
+-- Variables
 local Identity = -1
 local active = true
-  Others
-local oldLoader = load ing
-  Empty Tables
+-- Others
+local oldLoader = loadstring
+-- Empty Tables
 local clonerefs = {}
 local protecteduis = {}
 local gc = {}
-local Instances = {}   for nil instances
-local funcs = {}   main table
-local names = {}   protected gui names
-local Cache = {}   for cached instances
-local Drawings = {}   for cleardrawcache
-  Non empty tables
+local Instances = {} -- for nil instances
+local funcs = {} -- main table
+local names = {} -- protected gui names
+local Cache = {} -- for cached instances
+local Drawings = {} -- for cleardrawcache
+-- Non empty tables
 local colors = {
 	BLACK = Color3.fromRGB(50, 50, 50),
 	BLUE = Color3.fromRGB(0, 0, 204),
@@ -262,12 +262,12 @@ local patterns2 = {
 	{ pattern = 'for%s+(%w+)%s*,%s*(%w+)%s*in%s*(%w+)%s*do', format = "for %s, %s in pairs(%s) do" }
 }
 local renv = {
-	print, warn, error, assert, collectgarbage, load, require, select, tonumber, to ing, type, xpcall, pairs, next, ipairs,
+	print, warn, error, assert, collectgarbage, load, require, select, tonumber, tostring, type, xpcall, pairs, next, ipairs,
 	newproxy, rawequal, rawget, rawset, rawlen, setmetatable, PluginManager,
 	coroutine.create, coroutine.resume, coroutine.running, coroutine.status, coroutine.wrap, coroutine.yield,
 	bit32.arshift, bit32.band, bit32.bnot, bit32.bor, bit32.btest, bit32.extract, bit32.lshift, bit32.replace, bit32.rshift, bit32.xor,
 	math.abs, math.acos, math.asin, math.atan, math.atan2, math.ceil, math.cos, math.cosh, math.deg, math.exp, math.floor, math.fmod, math.frexp, math.ldexp, math.log, math.log10, math.max, math.min, math.modf, math.pow, math.rad, math.random, math.randomseed, math.sin, math.sinh, math.sqrt, math.tan, math.tanh,
-	 ing.byte,  ing.char,  ing.find, string.format, string.gmatch, string.gsub, string.len, string.lower, string.match, string.pack, string.packsize, string.rep, string.reverse, string.sub, string.unpack, string.upper,
+	string.byte, string.char, string.find, string.format, string.gmatch, string.gsub, string.len, string.lower, string.match, string.pack, string.packsize, string.rep, string.reverse, string.sub, string.unpack, string.upper,
 	table.concat, table.insert, table.pack, table.remove, table.sort, table.unpack,
 	utf8.char, utf8.charpattern, utf8.codepoint, utf8.codes, utf8.len, utf8.nfdnormalize, utf8.nfcnormalize,
 	os.clock, os.date, os.difftime, os.time,
@@ -275,17 +275,17 @@ local renv = {
 	task.defer, task.delay, task.spawn, task.wait,
 	debug.traceback, debug.profilebegin, debug.profileend
 }
-local keys={[0x08]=Enum.KeyCode.Backspace,[0x09]=Enum.KeyCode.Tab,[0x0C]=Enum.KeyCode.Clear,[0x0D]=Enum.KeyCode.Return,[0x10]=Enum.KeyCode.LeftShift,[0x11]=Enum.KeyCode.LeftControl,[0x12]=Enum.KeyCode.LeftAlt,[0x13]=Enum.KeyCode.Pause,[0x14]=Enum.KeyCode.CapsLock,[0x1B]=Enum.KeyCode.Escape,[0x20]=Enum.KeyCode.Space,[0x21]=Enum.KeyCode.PageUp,[0x22]=Enum.KeyCode.PageDown,[0x23]=Enum.KeyCode.End,[0x24]=Enum.KeyCode.Home,[0x2D]=Enum.KeyCode.Insert,[0x2E]=Enum.KeyCode.Delete,[0x30]=Enum.KeyCode.Zero,[0x31]=Enum.KeyCode.One,[0x32]=Enum.KeyCode.Two,[0x33]=Enum.KeyCode.Three,[0x34]=Enum.KeyCode.Four,[0x35]=Enum.KeyCode.Five,[0x36]=Enum.KeyCode.Six,[0x37]=Enum.KeyCode.Seven,[0x38]=Enum.KeyCode.Eight,[0x39]=Enum.KeyCode.Nine,[0x41]=Enum.KeyCode.A,[0x42]=Enum.KeyCode.B,[0x43]=Enum.KeyCode.C,[0x44]=Enum.KeyCode.D,[0x45]=Enum.KeyCode.E,[0x46]=Enum.KeyCode.F,[0x47]=Enum.KeyCode.G,[0x48]=Enum.KeyCode.H,[0x49]=Enum.KeyCode.I,[0x4A]=Enum.KeyCode.J,[0x4B]=Enum.KeyCode.K,[0x4C]=Enum.KeyCode.L,[0x4D]=Enum.KeyCode.M,[0x4E]=Enum.KeyCode.N,[0x4F]=Enum.KeyCode.O,[0x50]=Enum.KeyCode.P,[0x51]=Enum.KeyCode.Q,[0x52]=Enum.KeyCode.R,[0x53]=Enum.KeyCode.S,[0x54]=Enum.KeyCode.T,[0x55]=Enum.KeyCode.U,[0x56]=Enum.KeyCode.V,[0x57]=Enum.KeyCode.W,[0x58]=Enum.KeyCode.X,[0x59]=Enum.KeyCode.Y,[0x5A]=Enum.KeyCode.Z,[0x5D]=Enum.KeyCode.Menu,[0x60]=Enum.KeyCode.KeypadZero,[0x61]=Enum.KeyCode.KeypadOne,[0x62]=Enum.KeyCode.KeypadTwo,[0x63]=Enum.KeyCode.KeypadThree,[0x64]=Enum.KeyCode.KeypadFour,[0x65]=Enum.KeyCode.KeypadFive,[0x66]=Enum.KeyCode.KeypadSix,[0x67]=Enum.KeyCode.KeypadSeven,[0x68]=Enum.KeyCode.KeypadEight,[0x69]=Enum.KeyCode.KeypadNine,[0x6A]=Enum.KeyCode.KeypadMultiply,[0x6B]=Enum.KeyCode.KeypadPlus,[0x6D]=Enum.KeyCode.KeypadMinus,[0x6E]=Enum.KeyCode.KeypadPeriod,[0x6F]=Enum.KeyCode.KeypadDivide,[0x70]=Enum.KeyCode.F1,[0x71]=Enum.KeyCode.F2,[0x72]=Enum.KeyCode.F3,[0x73]=Enum.KeyCode.F4,[0x74]=Enum.KeyCode.F5,[0x75]=Enum.KeyCode.F6,[0x76]=Enum.KeyCode.F7,[0x77]=Enum.KeyCode.F8,[0x78]=Enum.KeyCode.F9,[0x79]=Enum.KeyCode.F10,[0x7A]=Enum.KeyCode.F11,[0x7B]=Enum.KeyCode.F12,[0x90]=Enum.KeyCode.NumLock,[0x91]=Enum.KeyCode.ScrollLock,[0xBA]=Enum.KeyCode.Semicolon,[0xBB]=Enum.KeyCode.Equals,[0xBC]=Enum.KeyCode.Comma,[0xBD]=Enum.KeyCode.Minus,[0xBE]=Enum.KeyCode.Period,[0xBF]=Enum.KeyCode.Slash,[0xC0]=Enum.KeyCode.Backquote,[0xDB]=Enum.KeyCode.LeftBracket,[0xDD]=Enum.KeyCode.RightBracket,[0xDE]=Enum.KeyCode.Quote}   for keypress
-local Fonts = {   Drawing.Fonts
+local keys={[0x08]=Enum.KeyCode.Backspace,[0x09]=Enum.KeyCode.Tab,[0x0C]=Enum.KeyCode.Clear,[0x0D]=Enum.KeyCode.Return,[0x10]=Enum.KeyCode.LeftShift,[0x11]=Enum.KeyCode.LeftControl,[0x12]=Enum.KeyCode.LeftAlt,[0x13]=Enum.KeyCode.Pause,[0x14]=Enum.KeyCode.CapsLock,[0x1B]=Enum.KeyCode.Escape,[0x20]=Enum.KeyCode.Space,[0x21]=Enum.KeyCode.PageUp,[0x22]=Enum.KeyCode.PageDown,[0x23]=Enum.KeyCode.End,[0x24]=Enum.KeyCode.Home,[0x2D]=Enum.KeyCode.Insert,[0x2E]=Enum.KeyCode.Delete,[0x30]=Enum.KeyCode.Zero,[0x31]=Enum.KeyCode.One,[0x32]=Enum.KeyCode.Two,[0x33]=Enum.KeyCode.Three,[0x34]=Enum.KeyCode.Four,[0x35]=Enum.KeyCode.Five,[0x36]=Enum.KeyCode.Six,[0x37]=Enum.KeyCode.Seven,[0x38]=Enum.KeyCode.Eight,[0x39]=Enum.KeyCode.Nine,[0x41]=Enum.KeyCode.A,[0x42]=Enum.KeyCode.B,[0x43]=Enum.KeyCode.C,[0x44]=Enum.KeyCode.D,[0x45]=Enum.KeyCode.E,[0x46]=Enum.KeyCode.F,[0x47]=Enum.KeyCode.G,[0x48]=Enum.KeyCode.H,[0x49]=Enum.KeyCode.I,[0x4A]=Enum.KeyCode.J,[0x4B]=Enum.KeyCode.K,[0x4C]=Enum.KeyCode.L,[0x4D]=Enum.KeyCode.M,[0x4E]=Enum.KeyCode.N,[0x4F]=Enum.KeyCode.O,[0x50]=Enum.KeyCode.P,[0x51]=Enum.KeyCode.Q,[0x52]=Enum.KeyCode.R,[0x53]=Enum.KeyCode.S,[0x54]=Enum.KeyCode.T,[0x55]=Enum.KeyCode.U,[0x56]=Enum.KeyCode.V,[0x57]=Enum.KeyCode.W,[0x58]=Enum.KeyCode.X,[0x59]=Enum.KeyCode.Y,[0x5A]=Enum.KeyCode.Z,[0x5D]=Enum.KeyCode.Menu,[0x60]=Enum.KeyCode.KeypadZero,[0x61]=Enum.KeyCode.KeypadOne,[0x62]=Enum.KeyCode.KeypadTwo,[0x63]=Enum.KeyCode.KeypadThree,[0x64]=Enum.KeyCode.KeypadFour,[0x65]=Enum.KeyCode.KeypadFive,[0x66]=Enum.KeyCode.KeypadSix,[0x67]=Enum.KeyCode.KeypadSeven,[0x68]=Enum.KeyCode.KeypadEight,[0x69]=Enum.KeyCode.KeypadNine,[0x6A]=Enum.KeyCode.KeypadMultiply,[0x6B]=Enum.KeyCode.KeypadPlus,[0x6D]=Enum.KeyCode.KeypadMinus,[0x6E]=Enum.KeyCode.KeypadPeriod,[0x6F]=Enum.KeyCode.KeypadDivide,[0x70]=Enum.KeyCode.F1,[0x71]=Enum.KeyCode.F2,[0x72]=Enum.KeyCode.F3,[0x73]=Enum.KeyCode.F4,[0x74]=Enum.KeyCode.F5,[0x75]=Enum.KeyCode.F6,[0x76]=Enum.KeyCode.F7,[0x77]=Enum.KeyCode.F8,[0x78]=Enum.KeyCode.F9,[0x79]=Enum.KeyCode.F10,[0x7A]=Enum.KeyCode.F11,[0x7B]=Enum.KeyCode.F12,[0x90]=Enum.KeyCode.NumLock,[0x91]=Enum.KeyCode.ScrollLock,[0xBA]=Enum.KeyCode.Semicolon,[0xBB]=Enum.KeyCode.Equals,[0xBC]=Enum.KeyCode.Comma,[0xBD]=Enum.KeyCode.Minus,[0xBE]=Enum.KeyCode.Period,[0xBF]=Enum.KeyCode.Slash,[0xC0]=Enum.KeyCode.Backquote,[0xDB]=Enum.KeyCode.LeftBracket,[0xDD]=Enum.KeyCode.RightBracket,[0xDE]=Enum.KeyCode.Quote} -- for keypress
+local Fonts = { -- Drawing.Fonts
 	[0] = Enum.Font.Arial,
 	[1] = Enum.Font.BuilderSans,
 	[2] = Enum.Font.Gotham,
 	[3] = Enum.Font.RobotoMono
 }
-  rconsole
+-- rconsole
 local MessageColor = colors['WHITE']
 local ConsoleClone = nil
-  functions
+-- functions
 local function Descendants(tbl)
 	local descendants = {}
 
@@ -327,7 +327,7 @@ local function ToPairsLoop(code)
 	return code
 end
 
-local function SafeOverride(a, b, c)  [[ Index, Data, Should override ]]
+local function SafeOverride(a, b, c) --[[ Index, Data, Should override ]]
 	if getgenv()[a] and not c then return 1 end
 	getgenv()[a] = b
 
@@ -368,7 +368,7 @@ local function stopDrag(input)
 	input.UserInputState = Enum.UserInputState.End
 end
 
-  Main Functions
+-- Main Functions
 function QueueGetIdentity()
 	printidentity("Tidal Injected! Level :")
 	task.wait(.1)
@@ -412,7 +412,7 @@ function Queue:Current()
 	return self.elements
 end
 
-  Events
+-- Events
 game.DescendantRemoving:Connect(function(des)
 	table.insert(Instances, des)
 	Cache[des] = 'REMOVE'
@@ -441,7 +441,7 @@ game:GetService("UserInputService").InputEnded:Connect(function(input)
 		stopDrag(input)
 	end
 end)
-  Libraries
+-- Libraries
 funcs.base64 = {}
 funcs.crypt = {hex={},url={}}
 funcs.syn = {}
@@ -467,7 +467,7 @@ funcs.debug.getinfo = function(t)
 		['short_src'] = tostring(Source:sub(1, 60)),
 		['what'] = Source == '[C]' and 'C' or 'Lua',
 		['func'] = t,
-		['nups'] = 0   i CANNOT make an upvalue thingy
+		['nups'] = 0 -- i CANNOT make an upvalue thingy
 	}
 end
 
@@ -484,13 +484,13 @@ local ConsoleQueue = Queue.new()
 local getgenv = getgenv or function() return getfenv(1) end
 getgenv().getgenv = getgenv
 
-  [[ Functions ]]
+-- [[ Functions ]]
 
- [[funcs.cloneref = function(a)
+--[[funcs.cloneref = function(a)
     if not clonerefs[a] then clonerefs[a] = {} end
     local Clone = {}
 
-    local mt = {__type='Instance'}   idk if this works ;(
+    local mt = {__type='Instance'} -- idk if this works ;(
 
     mt.__tostring = function()
         return a.Name
@@ -522,7 +522,7 @@ getgenv().getgenv = getgenv
 end
 TEMPORARY REMOVED UNTIL WE FIND A FIX
 ]]
-  // The rest is made by me.
+-- // The rest is made by me.
 
 funcs.compareinstances = function(a, b)
 	if not clonerefs[a] then
@@ -543,7 +543,7 @@ funcs.clonefunction = function(a)
 end
 
 funcs.cache.iscached = function(thing)
-	return Cache[thing] ~= 'REMOVE' and thing:IsDescendantOf(game) or false   If it's cache isnt 'REMOVE' and its a des of game (Usually always true) or if its cache is 'REMOVE' then its false.
+	return Cache[thing] ~= 'REMOVE' and thing:IsDescendantOf(game) or false -- If it's cache isnt 'REMOVE' and its a des of game (Usually always true) or if its cache is 'REMOVE' then its false.
 end
 funcs.cache.invalidate = function(thing)
 	Cache[thing] = 'REMOVE'
@@ -553,7 +553,7 @@ funcs.cache.replace = function(a, b)
 	if Cache[a] then
 		Cache[a] = b
 	end
-	local n, p = a.Name, a.Parent   name, parent
+	local n, p = a.Name, a.Parent -- name, parent
 	b.Parent = p
 	b.Name = n
 	a.Parent = nil
@@ -568,7 +568,7 @@ funcs.deepclone = function(a)
 	end
 	return Result
 end
- [[ The base64 functions were made by https://scriptblox.com/u/yofriendfromschool1 , Credits to him.]]
+--[[ The base64 functions were made by https://scriptblox.com/u/yofriendfromschool1 , Credits to him.]]
 funcs.base64.encode = function(data)
 	local letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 	return ((data:gsub('.', function(x) 
@@ -701,8 +701,8 @@ funcs.gethui = function()
 end
 if getgenv().getrenv and #getgenv().getrenv() == 0 or not getgenv().getrenv then
 	getgenv().getrenv = nil
-	getgenv().getrenv = function()   Override incognito's getrenv
-		return renv   couldn't think of a better way to implement it
+	getgenv().getrenv = function() -- Override incognito's getrenv
+		return renv -- couldn't think of a better way to implement it
 	end
 end
 funcs.setclipboard = function(data)
@@ -759,7 +759,7 @@ end
 funcs.syn.protect_gui = function(gui)
 	names[gui] = {name=gui.Name,parent=gui.Parent}
 	protecteduis[gui] = gui
-	gui.Name = funcs.crypt.random(64)   64 byte string, removed hashing cuz its useless lmao
+	gui.Name = funcs.crypt.random(64) -- 64 byte string, removed hashing cuz its useless lmao
 	gui.Parent = gethui()
 end
 funcs.syn.unprotect_gui = function(gui)
@@ -767,7 +767,7 @@ funcs.syn.unprotect_gui = function(gui)
 end
 funcs.syn.protectgui = funcs.syn.protect_gui
 funcs.syn.unprotectgui = funcs.syn.unprotect_gui
-funcs.syn.secure_call = function(func)   Does not do a secure call, just pcalls it.
+funcs.syn.secure_call = function(func) -- Does not do a secure call, just pcalls it.
 	return pcall(func)
 end
 
@@ -893,7 +893,7 @@ funcs.newcclosure = function(f)
 	end)
 	a()
 	return a
-end   Credits to myworld AND EMPER for this
+end -- Credits to myworld AND EMPER for this
 funcs.iscclosure = function(fnc) return debug.info(fnc, 's') == '[C]' end
 funcs.islclosure = function(func) return not funcs.iscclosure(func) end
 funcs.isexecutorclosure = function(fnc)
@@ -927,7 +927,7 @@ funcs.isourclosure = funcs.isexecutorclosure
 funcs.isexecclosure = funcs.isexecutorclosure
 funcs.checkclosure = funcs.isourclosure
 
- [[ File system is something i do not know how to implement in roblox lua.
+--[[ File system is something i do not know how to implement in roblox lua.
 UPDATE AT 18/5/2024:
 I figured out i can use temp file system with tables.
 ]]
@@ -1061,15 +1061,15 @@ funcs.getrunningscripts = function()
 end
 funcs.fireproximityprompt = function(p)
 	local Hold, Distance, Enabled, Thing, CFrame1= p.HoldDuration, p.MaxActivationDistance, p.Enabled, p.RequiresLineOfSight, nil
-	  Make it activatable from anywhere
+	-- Make it activatable from anywhere
 	p.MaxActivationDistance = math.huge
-	  Make it take 0 seconds to activate
+	-- Make it take 0 seconds to activate
 	p.HoldDuration = 0
-	  Make it enabled (so you can activate it)
+	-- Make it enabled (so you can activate it)
 	p.Enabled = true
-	  Disable RequiresLineOfSight
+	-- Disable RequiresLineOfSight
 	p.RequiresLineOfSight = false
-	  Show the thingy
+	-- Show the thingy
 	local function get()
 		local classes = {'BasePart', 'Part', 'MeshPart'}
 		for _, v in pairs(classes) do
@@ -1117,12 +1117,12 @@ funcs.firetouchinterest = function(toTouch, TouchWith, on)
 	task.wait()
 	toTouch.CFrame = cf
 	toTouch.CanCollide = anc
-end   i admit its kinda bad dont fucking attack me
+end -- i admit its kinda bad dont fucking attack me
 
-  SHA256 Hashing
+-- SHA256 Hashing
 local function str2hexa(a)return string.gsub(a,".",function(b)return string.format("%02x",string.byte(b))end)end;local function num2s(c,d)local a=""for e=1,d do local f=c%256;a=string.char(f)..a;c=(c-f)/256 end;return a end;local function s232num(a,e)local d=0;for g=e,e+3 do d=d*256+string.byte(a,g)end;return d end;local function preproc(h,i)local j=64-(i+9)%64;i=num2s(8*i,8)h=h.."\128"..string.rep("\0",j)..i;assert(#h%64==0)return h end;local function k(h,e,l)local m={}local n={0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2}for g=1,16 do m[g]=s232num(h,e+(g-1)*4)end;for g=17,64 do local o=m[g-15]local p=bit.bxor(bit.rrotate(o,7),bit.rrotate(o,18),bit.rshift(o,3))o=m[g-2]local q=bit.bxor(bit.rrotate(o,17),bit.rrotate(o,19),bit.rshift(o,10))m[g]=(m[g-16]+p+m[g-7]+q)%2^32 end;local r,s,b,t,u,v,w,x=l[1],l[2],l[3],l[4],l[5],l[6],l[7],l[8]for e=1,64 do local p=bit.bxor(bit.rrotate(r,2),bit.rrotate(r,13),bit.rrotate(r,22))local y=bit.bxor(bit.band(r,s),bit.band(r,b),bit.band(s,b))local z=(p+y)%2^32;local q=bit.bxor(bit.rrotate(u,6),bit.rrotate(u,11),bit.rrotate(u,25))local A=bit.bxor(bit.band(u,v),bit.band(bit.bnot(u),w))local B=(x+q+A+n[e]+m[e])%2^32;x=w;w=v;v=u;u=(t+B)%2^32;t=b;b=s;s=r;r=(B+z)%2^32 end;l[1]=(l[1]+r)%2^32;l[2]=(l[2]+s)%2^32;l[3]=(l[3]+b)%2^32;l[4]=(l[4]+t)%2^32;l[5]=(l[5]+u)%2^32;l[6]=(l[6]+v)%2^32;l[7]=(l[7]+w)%2^32;l[8]=(l[8]+x)%2^32 end;funcs.crypt.hash=function(h)h=preproc(h,#h)local l={0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19}for e=1,#h,64 do k(h,e,l)end;return str2hexa(num2s(l[1],4)..num2s(l[2],4)..num2s(l[3],4)..num2s(l[4],4)..num2s(l[5],4)..num2s(l[6],4)..num2s(l[7],4)..num2s(l[8],4))end
 
-funcs.Drawing.new = function(Type)   Drawing.new
+funcs.Drawing.new = function(Type) -- Drawing.new
 	local baseProps = {
 		Visible = false,
 		Color = Color3.new(0,0,0),
@@ -1477,8 +1477,8 @@ funcs.checkcaller = function()
 	local info = debug.info(getgenv, 'slnaf')
 	return debug.info(1, 'slnaf')==info
 end
-funcs.getthreadcontext = function()   funny little way of getting this
-	if coroutine.isyieldable(coroutine.running()) then   check if u can use task.wait or not
+funcs.getthreadcontext = function() -- funny little way of getting this
+	if coroutine.isyieldable(coroutine.running()) then -- check if u can use task.wait or not
 		QueueGetIdentity()
 		task.wait(.1)
 		return tonumber(Identity)
@@ -1626,7 +1626,7 @@ funcs.consoleinput = funcs.rconsoleinput
 funcs.rconsolesettitle = funcs.rconsolename
 funcs.consolesettitle = funcs.rconsolename
 
-funcs.queue_on_teleport = function(scripttoexec)   WARNING: MUST HAVE MOREUNC IN AUTO EXECUTE FOR THIS TO WORK.
+funcs.queue_on_teleport = function(scripttoexec) -- WARNING: MUST HAVE MOREUNC IN AUTO EXECUTE FOR THIS TO WORK.
 	local newTPService = {
 		__index = function(self, key)
 			if key == 'Teleport' then
@@ -1674,7 +1674,7 @@ for _, i in pairs(funcs2) do
 	local Result = SafeOverride(i, v)
 	if Result == 2 then Count = Count + 1 end
 	local str = Result == 1 and ('[⛔] %s already exists.'):format(i) or Result == 2 and ("[✅] Added %s%s to the global environment. (%d/%d)"):format(i, type(v)=='function' and '()' or '', Count, Total) or Result ~= 1 and Result ~= 2 and ("[⛔] Unknown result for %s."):format(i)
-	 --print(str)
+	--print(str)
 end
 
 getgenv().syn.protect_gui(DrawingDict)
