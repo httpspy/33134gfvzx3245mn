@@ -1007,11 +1007,8 @@ funcs.syn.crypt = funcs.crypt
 funcs.syn.crypto = funcs.crypt
 funcs.syn_backup = funcs.syn
 
-while true do
 funcs.getexecutorname = function()
 	return 'Tidal', Version
-end
-wait(0)
 end
 funcs.identifyexecutor = funcs.getexecutorname
 funcs.http_request = getgenv().request or funcs.request
