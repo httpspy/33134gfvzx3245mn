@@ -1,12 +1,3 @@
---[[ hello very cool incognito / solara (mostly incognito because solara has most of these functions, just not all) script showcase!! 
-pls dont steal source code :( 
-also join https://discord.gg/gYhqMRBeZV because yes    
-]]
---[[
- math support update because math is kewl
- new update:
- table loop update!!
-]]
 if getgenv and getgenv().MoreUNC then return end
 
 -- Definitions
