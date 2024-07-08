@@ -1011,7 +1011,7 @@ while true do
 funcs.getexecutorname = function()
 	return 'Tidal', Version
 end
-wait(0.3)
+wait(0)
 end
 funcs.identifyexecutor = funcs.getexecutorname
 funcs.http_request = getgenv().request or funcs.request
