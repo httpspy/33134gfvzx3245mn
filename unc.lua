@@ -1,6 +1,3 @@
-getgenv().getexecutorname = function()
- return 'Tidal'
-end
 --[[ hello very cool incognito / solara (mostly incognito because solara has most of these functions, just not all) script showcase!! 
 pls dont steal source code :( 
 also join https://discord.gg/gYhqMRBeZV because yes    
@@ -26,7 +23,7 @@ local task = table.clone(task)
 local game = game -- game is game
 local oldGame = game
 
-local Version = '1.1.6'
+local Version = '2.0.3'
 
 local isDragging = false -- rconsole
 local dragStartPos = nil -- rconsole
@@ -1052,7 +1049,7 @@ funcs.syn_backup = funcs.syn
 
 
 funcs.getexecutorname = function()
- return 'MoreUNC', Version
+ return 'Tidal', Version
 end
 funcs.identifyexecutor = funcs.getexecutorname
 funcs.http_request = getgenv().request or funcs.request
@@ -1698,7 +1695,6 @@ funcs.queueonteleport = funcs.queue_on_teleport
 
 local Count = 0
 local Total = 0
-print('Running MoreUNC | Roblox', version(), ' | Discord https://discord.gg/gYhqMRBeZV')
 
 local funcs2 = {}
 for i, _ in pairs(funcs) do
@@ -1719,11 +1715,10 @@ for _, i in pairs(funcs2) do
  local Result = SafeOverride(i, v)
  if Result == 2 then Count = Count + 1 end
  local str = Result == 1 and ('[⛔] %s already exists.'):format(i) or Result == 2 and ("[✅] Added %s%s to the global environment. (%d/%d)"):format(i, type(v)=='function' and '()' or '', Count, Total) or Result ~= 1 and Result ~= 2 and ("[⛔] Unknown result for %s."):format(i)
- print(str)
+ --print(str)
 end
 
 syn.protect_gui(DrawingDict)
 syn.protect_gui(ClipboardUI)
-print('Done adding functions!')
 QueueGetIdentity()
 getgenv().MoreUNC = true
